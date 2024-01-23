@@ -1,1 +1,1 @@
-document.write("kk");
+document.write("kk <3 earth");
