@@ -1,1 +1,1 @@
-document.write("kk <3 earth");
+document.write("คุ้กกี้ <3 earth");
