@@ -1,1 +1,1 @@
-document.write("kk <3 earth");
+document.write("cookie <3 earth");
