@@ -1,2 +1,2 @@
-document.write("Cookie <3 earth");
+document.write("Cat <3 earth");
 console.log("ไม่บอก");
