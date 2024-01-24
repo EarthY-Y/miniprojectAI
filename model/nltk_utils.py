@@ -29,9 +29,6 @@ print(a)
 a= tokenize(a)
 print(a)
 
-
-
-
 def bag_of_words(tokenized_sentence, words):
     """
     return bag of words array:
