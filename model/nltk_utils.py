@@ -24,10 +24,6 @@ def stem(word):
     """
     return stemmer.stem(word.lower())
 
-a= "Do you take credit cards?"
-print(a)
-a= tokenize(a)
-print(a)
 
 def bag_of_words(tokenized_sentence, words):
     """
