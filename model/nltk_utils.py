@@ -18,7 +18,7 @@ def stem(word):
     """
     stemming = find the root form of the word
     examples:
-    words = ["organize", "organizes", "organizing"]
+    words = ["organ", "organ", "organ"]
     words = [stem(w) for w in words]
     -> ["organ", "organ", "organ"]
     """
@@ -32,7 +32,7 @@ def bag_of_words(tokenized_sentence, words):
     example:
     sentence = ["hello", "how", "are", "you"]
     words = ["hi", "hello", "I", "you", "bye", "thank", "cool"]
-    bog   = [  0 ,    1 ,    0 ,   1 ,    0 ,    0 ,      0]
+    bag   = [  0 ,    1 ,    0 ,   1 ,    0 ,    0 ,      0]
     """
     # stem each word
     sentence_words = [stem(word) for word in tokenized_sentence]
