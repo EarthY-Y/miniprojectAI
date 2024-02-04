@@ -1,6 +1,6 @@
 import random
 import json
-
+import os
 import torch
 
 from model import NeuralNet
@@ -8,7 +8,8 @@ from nltk_utils import bag_of_words, tokenize
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-with open('database/intents.json', 'r') as json_data:
+url = os.path.join('database/intents.json')
+with open(url, 'r',encoding='utf-8') as  json_data:
     intents = json.load(json_data)
 
 
