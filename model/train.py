@@ -38,16 +38,12 @@ all_words = [stem(w) for w in all_words if w not in ignore_words]
 all_words = sorted(set(all_words))
 tags = sorted(set(tags))
 
-<<<<<<< Updated upstream
-print(len(xy), "patterns\n",xy )
-print("\n",len(tags), "tags:", tags)
-print("\n",len(all_words), "unique stemmed words:", all_words)
-=======
+
 print(len(xy), "patterns")
 print(xy, "patterns")
 print("\n",len(tags), "tags:", tags)
 print(len(all_words), "unique stemmed words:", all_words,"\n")
->>>>>>> Stashed changes
+
 
 # create training data
 X_train = []
@@ -64,14 +60,9 @@ for (pattern_sentence, tag) in xy:
 
 X_train = np.array(X_train)
 y_train = np.array(y_train)
-<<<<<<< Updated upstream
-print("\n",X_train)
-print("\n", y_train)
-
-=======
 print("\n",X_train,"\n")
 print("\n",y_train,"\n")
->>>>>>> Stashed changes
+
 
 # Hyper-parameters 
 num_epochs = 1000
