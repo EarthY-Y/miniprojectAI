@@ -7,10 +7,7 @@ from nltk.stem.porter import PorterStemmer
 stemmer = PorterStemmer()
 
 def tokenize(sentence):
-<<<<<<< Updated upstream
-=======
     # sentence =' '.join(sentence) #ถ้าทำการเเยกคำต้องนี้จะเป็นการเเยกตัวอักษรเลย เเต่ก็ได้ผลที่ดีมาก
->>>>>>> Stashed changes
     sentence = sentence.encode('utf-8').decode('utf-8')
     return nltk.word_tokenize(sentence)
 

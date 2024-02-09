@@ -4,13 +4,8 @@ import os
 import torch
 
 from model import NeuralNet
-<<<<<<< Updated upstream
-from nltk_utils import bag_of_words
-from pythainlp import word_tokenize #ใช้ tokenize ของไทย 
-=======
 from nltk_utils import bag_of_words, tokenize
 from pythainlp import word_tokenize
->>>>>>> Stashed changes
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -43,19 +38,11 @@ while True:
     if sentence == "q":
         break
     
-<<<<<<< Updated upstream
-    # เป็นไลบรารีที่ช่วยให้ NLP เข้าใช้ภาษาไทย
-    #pip install python-crfsuite
-    #pip install --upgrade --pre pythainlp
-    sentence = word_tokenize(sentence)
-    
-=======
     #ต้องลง PyThaiNLP ก่อน เป็น library ที่ทำให้ NLP รองรับภาษาไทย
     #pip install python-crfsuite
     #pip install --upgrade --pre pythainlp
     sentence = word_tokenize(sentence)
     ' '.join(sentence)
->>>>>>> Stashed changes
     print(sentence)
     
     X = bag_of_words(sentence, all_words)
