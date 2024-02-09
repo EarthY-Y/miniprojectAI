@@ -4,7 +4,8 @@ import os
 import torch
 
 from model import NeuralNet
-from nltk_utils import bag_of_words, tokenize
+from nltk_utils import bag_of_words
+from pythainlp import word_tokenize #ใช้ tokenize ของไทย 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -36,8 +37,14 @@ while True:
     sentence = input("You: ")
     if sentence == "quit":
         break
-
-    sentence = tokenize(sentence)
+    
+    # เป็นไลบรารีที่ช่วยให้ NLP เข้าใช้ภาษาไทย
+    #pip install python-crfsuite
+    #pip install --upgrade --pre pythainlp
+    sentence = word_tokenize(sentence)
+    
+    print(sentence)
+    
     X = bag_of_words(sentence, all_words)
     X = X.reshape(1, X.shape[0])
     X = torch.from_numpy(X).to(device)
@@ -49,7 +56,7 @@ while True:
 
     probs = torch.softmax(output, dim=1)
     prob = probs[0][predicted.item()]
-    if prob.item() > 0.75:
+    if prob.item() > 0.9:
         for intent in intents['intents']:
             if tag == intent["tag"]:
                 print(f"{bot_name}: {random.choice(intent['responses'])}")
