@@ -2,11 +2,10 @@ import numpy as np
 import random
 import json
 import os
-
 import torch
 import torch.nn as nn
-from torch.utils.data import Dataset, DataLoader
 
+from torch.utils.data import Dataset, DataLoader
 from nltk_utils import bag_of_words, tokenize, stem
 from model import NeuralNet
 
@@ -18,45 +17,40 @@ with open(url, 'r',encoding='utf-8') as f:
 all_words = []
 tags = []
 xy = []
-# loop through each sentence in our intents patterns
+# Loop ค่าข้อมูลในไฟล์ Json
 for intent in intents['intents']:
     tag = intent['tag']
-    # add to tag list
+    # เพิ่มข้อมูลลงในส่วนท้ายของลิสต์
     tags.append(tag)
     for pattern in intent['patterns']:
-        # tokenize each word in the sentence
+        # call tokenize 
         w = tokenize(pattern)
-        # add to our words list
+        # รวม List เข้าด้วยกัน
         all_words.extend(w)
-        # add to xy pair
+        # เพิ่มข็อมูลลงในส่วนท้ายของ Liset ทำให้เกิด list 2 ตัว ใน List เดียว
         xy.append((w, tag))
 
-# stem and lower each word
+# call stem เเละตัดเครื่องหมายที่ไม่ต้องการทิ้ง
 ignore_words = ['?', '.', '!']
 all_words = [stem(w) for w in all_words if w not in ignore_words]
-# remove duplicates and sort
+# เรียงตัวข้อมูล
 all_words = sorted(set(all_words))
 tags = sorted(set(tags))
 
+print(len(xy),xy, "\n")
+print(len(all_words),all_words, "\n")
+print(len(tags),tags, "\n")
 
-print(len(xy), "patterns")
-print(xy, "patterns")
-print("\n",len(tags), "tags:", tags)
-print(len(all_words), "unique stemmed words:", all_words,"\n")
-
-
-# create training data
 X_train = []
 y_train = []
+# Loop ข้อมูลที่อยู่ใน List xy
 for (pattern_sentence, tag) in xy:
-    # X: bag of words for each pattern_sentence
+    # call function BoW 
     bag = bag_of_words(pattern_sentence, all_words)
     X_train.append(bag)
-    # y: PyTorch CrossEntropyLoss needs only class labels, not one-hot
+    # สร้างป้ายกำกับเพื่อนำไปใช้ใน CrossEntropyLoss เเละส่วนอื่นๆ
     label = tags.index(tag)
     y_train.append(label)
-
-
 
 X_train = np.array(X_train)
 y_train = np.array(y_train)
@@ -65,7 +59,7 @@ print("\n",y_train,"\n")
 
 
 # Hyper-parameters 
-num_epochs = 1000
+num_epochs = 2000
 batch_size = 8
 learning_rate = 0.001
 input_size = len(X_train[0])
@@ -73,18 +67,18 @@ hidden_size = 8
 output_size = len(tags)
 print(input_size, output_size)
 
+#ใช้สำหรับเเยกชุดข้อมูลออกจากโมเดลเพราะว่าเวลาฝึกโมเดลจะมีการเปรับเปลี่ยนค่าของชุดข้อมูล
 class ChatDataset(Dataset):
-
     def __init__(self):
         self.n_samples = len(X_train)
         self.x_data = X_train
         self.y_data = y_train
 
-    # support indexing such that dataset[i] can be used to get i-th sample
+    # เข้าถึงตำเเหน่งข้อมูลใน X_train และ y_train ด้วย index
     def __getitem__(self, index):
         return self.x_data[index], self.y_data[index]
 
-    # we can call len(dataset) to return the size
+    # เมื่อมีการเรียกใช้ class จะรีเทรนขนาดของ  dataset
     def __len__(self):
         return self.n_samples
 
@@ -105,19 +99,16 @@ for epoch in range(num_epochs):
         words = words.to(device)
         labels = labels.to(dtype=torch.long).to(device)
         # print("\n",words)
-        
-        # Forward pass
-        outputs = model(words) #words เป็นข้อมูลของ pattren ทั้งหมดที่ทำการเเปลงค่าเป็น 0 กับ แล้ว
+        # Forward pass นำข้อมูลเข้า input layer ใน NN
+        outputs = model(words) #words เป็นข้อมูลของ pattren ทั้งหมดที่ทำการเเปลงค่าเป็น 0 กับ 1 แล้ว
         # print("\n",outputs)
         
-        # if y would be one-hot, we must apply
-        # labels = torch.max(labels, 1)[1]
         loss = criterion(outputs, labels)
         
         # Backward and optimize
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
+        optimizer.zero_grad() #set ค่า optimizer เป็น 0
+        loss.backward() #ใช้ Backpropagation ค่าของพารามิเตอร์ Loss weight - loss = new weigth
+        optimizer.step() # update ค่าพารามิเตอร์ของ optimizer  
         
     if (epoch+1) % 100 == 0:
         print (f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
