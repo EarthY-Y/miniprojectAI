@@ -8,7 +8,7 @@ CORS(app)
 
 @app.post("/predict")
 def predict():
-    text = request.get_json().get("massage")
+    text = request.get_json().get("message")
     #TODO: check if text is valid
     response = get_response(text)
     massage = {"answer": response}

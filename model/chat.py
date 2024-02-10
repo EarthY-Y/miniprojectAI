@@ -35,7 +35,6 @@ bot_name = "Sam"
 def get_response(msg):
     
     sentence = word_tokenize(msg)
-    sentence = correct(sentence)
     ' '.join(sentence)
     print(sentence)
     
