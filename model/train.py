@@ -83,8 +83,8 @@ class ChatDataset(Dataset):
         return self.n_samples
 
 dataset = ChatDataset()
-train_loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True, num_workers=0) #num_workers=0 เราจะให้ Pytorch เลือกทรัพยากรอัตโนมัติ เพราะเราจะทำงานบน GPU 
-
+train_loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True, num_workers=0)  
+#num_workers=0 เราจะให้ Pytorch เลือกทรัพยากรอัตโนมัติ เพราะเราจะทำงานบน GPU
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 model = NeuralNet(input_size, hidden_size, output_size).to(device)
@@ -107,7 +107,7 @@ for epoch in range(num_epochs):
         
         # Backward and optimize
         optimizer.zero_grad() #set ค่า optimizer เป็น 0
-        loss.backward() #ใช้ Backpropagation ค่าของพารามิเตอร์ Loss weight - loss = new weigth
+        loss.backward() #ใช้ Backpropagation กับค่าของพารามิเตอร์ของ Loss new weight = weight - (learning rate * loss)
         optimizer.step() # update ค่าพารามิเตอร์ของ optimizer  
         
     if (epoch+1) % 100 == 0:
