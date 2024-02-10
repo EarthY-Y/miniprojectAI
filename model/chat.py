@@ -32,7 +32,11 @@ model.eval()
 
 bot_name = "Sam"
 def get_response(msg):
+    
     sentence = word_tokenize(msg)
+    ' '.join(sentence)
+    print(sentence)
+    
     X = bag_of_words(sentence, all_words)
     X = X.reshape(1, X.shape[0])
     X = torch.from_numpy(X).to(device)
@@ -57,7 +61,7 @@ if __name__ == "__main__":
     while True:
         # sentence = "do you use credit cards?"
         sentence = input("You: ")
-        if sentence == "quit":
+        if sentence == "q":
             break
 
         resp = get_response(sentence)
