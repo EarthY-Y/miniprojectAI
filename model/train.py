@@ -59,7 +59,7 @@ print("\n",y_train,"\n")
 
 
 # Hyper-parameters 
-num_epochs = 2000
+num_epochs = 1000
 batch_size = 8
 learning_rate = 0.001
 input_size = len(X_train[0])
@@ -98,11 +98,13 @@ for epoch in range(num_epochs):
     for (words, labels) in train_loader:
         words = words.to(device)
         labels = labels.to(dtype=torch.long).to(device)
-        # print("\n",words)
+        
         # Forward pass นำข้อมูลเข้า input layer ใน NN
         outputs = model(words) #words เป็นข้อมูลของ pattren ทั้งหมดที่ทำการเเปลงค่าเป็น 0 กับ 1 แล้ว
         # print("\n",outputs)
         
+        #Label คือ y_data ที่อยู่ใน class ChatDataset
+        #words คือ x_data ที่อยู่ใน class ChatDataset    
         loss = criterion(outputs, labels)
         
         # Backward and optimize
