@@ -31,20 +31,8 @@ model.load_state_dict(model_state)
 model.eval()
 
 bot_name = "Sam"
-print("Let's chat! (type 'q' to exit)")
-while True:
-    # sentence = "do you use credit cards?"
-    sentence = input("You: ")
-    if sentence == "q":
-        break
-    
-    #ต้องลง PyThaiNLP ก่อน เป็น library ที่ทำให้ NLP รองรับภาษาไทย
-    #pip install python-crfsuite
-    #pip install --upgrade --pre pythainlp
-    sentence = word_tokenize(sentence)
-    ' '.join(sentence)
-    print(sentence)
-    
+def get_response(msg):
+    sentence = word_tokenize(msg)
     X = bag_of_words(sentence, all_words)
     X = X.reshape(1, X.shape[0])
     X = torch.from_numpy(X).to(device)
@@ -56,9 +44,52 @@ while True:
 
     probs = torch.softmax(output, dim=1)
     prob = probs[0][predicted.item()]
-    if prob.item() > 0.5:
+    if prob.item() > 0.75:
         for intent in intents['intents']:
             if tag == intent["tag"]:
-                print(f"{bot_name}: {random.choice(intent['responses'])}")
-    else:
-        print(f"{bot_name}: I do not understand...")
+                return random.choice(intent['responses'])
+    
+    return "I do not understand..."
+
+
+if __name__ == "__main__":
+    print("Let's chat! (type 'quit' to exit)")
+    while True:
+        # sentence = "do you use credit cards?"
+        sentence = input("You: ")
+        if sentence == "quit":
+            break
+
+        resp = get_response(sentence)
+        print(resp)
+        
+# while True:
+#     # sentence = "do you use credit cards?"
+#     sentence = input("You: ")
+#     if sentence == "q":
+#         break
+    
+#     #ต้องลง PyThaiNLP ก่อน เป็น library ที่ทำให้ NLP รองรับภาษาไทย
+#     #pip install python-crfsuite
+#     #pip install --upgrade --pre pythainlp
+#     sentence = word_tokenize(sentence)
+#     ' '.join(sentence)
+#     print(sentence)
+    
+#     X = bag_of_words(sentence, all_words)
+#     X = X.reshape(1, X.shape[0])
+#     X = torch.from_numpy(X).to(device)
+
+#     output = model(X)
+#     _, predicted = torch.max(output, dim=1)
+
+#     tag = tags[predicted.item()]
+
+#     probs = torch.softmax(output, dim=1)
+#     prob = probs[0][predicted.item()]
+#     if prob.item() > 0.5:
+#         for intent in intents['intents']:
+#             if tag == intent["tag"]:
+#                 print(f"{bot_name}: {random.choice(intent['responses'])}")
+#     else:
+#         print(f"{bot_name}: I do not understand...")
