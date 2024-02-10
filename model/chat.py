@@ -6,6 +6,7 @@ import torch
 from model import NeuralNet
 from nltk_utils import bag_of_words
 from pythainlp import word_tokenize
+from pythainlp.spell import correct
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
@@ -34,6 +35,7 @@ bot_name = "Sam"
 def get_response(msg):
     
     sentence = word_tokenize(msg)
+    sentence = correct(sentence)
     ' '.join(sentence)
     print(sentence)
     
