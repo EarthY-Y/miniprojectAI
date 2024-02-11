@@ -108,13 +108,13 @@ for epoch in range(num_epochs):
         loss = criterion(outputs, labels)
         
         # Backward and optimize
-        optimizer.zero_grad() #set ค่า optimizer เป็น 0
+        optimizer.zero_grad() #set ค่า optimizer parameters เป็น 0
         loss.backward() #ใช้ Backpropagation กับค่าของพารามิเตอร์ของ Loss 
         #new weight = weight - (learning rate * loss)
         optimizer.step() # update ค่าพารามิเตอร์ของ optimizer  
         
     if (epoch+1) % 100 == 0:
-        print (f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
+        print (f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}', outputs)
 
 
 print(f'final loss: {loss.item():.4f}')
