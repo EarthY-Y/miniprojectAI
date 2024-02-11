@@ -3,18 +3,24 @@
     {
       "tag": "greeting",
       "patterns": [
-        "Hi",
-        "Hey",
-        "How are you",
-        "Is anyone there?",
-        "Hello",
-        "Good day"
+        "สวัสดี",
+        "ดี",
+        "ว่า ไง",
+        "สวัส",
+        "ว่า",
+        "ไง",
+        "หวัด ดี",
+        "สวัส ดี ครับ",
+        "ดี ครับ",
+        "ดี ค่ะ",
+        "ช่วย เเนะนำ เมนู ใหม่ ให้ หน่อย ได้ ไหม"
       ],
       "responses": [
-        "Hey :-)",
-        "Hello, thanks for visiting",
-        "Hi there, what can I do for you?",
-        "Hi there, how can I help?"
+        "สวัสดีวันจันทร์",
+        "สวัสดี",
+        "ว่าไง พวก",
+        "ดีครับ",
+        "ดีค่ะ"
       ]
     },
     {
