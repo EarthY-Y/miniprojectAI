@@ -100,16 +100,17 @@ for epoch in range(num_epochs):
         labels = labels.to(dtype=torch.long).to(device)
         
         # Forward pass นำข้อมูลเข้า input layer ใน NN
+        #words คือ x_data ที่อยู่ใน class ChatDataset 
         outputs = model(words) #words เป็นข้อมูลของ pattren ทั้งหมดที่ทำการเเปลงค่าเป็น 0 กับ 1 แล้ว
         # print("\n",outputs)
         
         #Label คือ y_data ที่อยู่ใน class ChatDataset
-        #words คือ x_data ที่อยู่ใน class ChatDataset    
         loss = criterion(outputs, labels)
         
         # Backward and optimize
         optimizer.zero_grad() #set ค่า optimizer เป็น 0
-        loss.backward() #ใช้ Backpropagation กับค่าของพารามิเตอร์ของ Loss new weight = weight - (learning rate * loss)
+        loss.backward() #ใช้ Backpropagation กับค่าของพารามิเตอร์ของ Loss 
+        #new weight = weight - (learning rate * loss)
         optimizer.step() # update ค่าพารามิเตอร์ของ optimizer  
         
     if (epoch+1) % 100 == 0:
